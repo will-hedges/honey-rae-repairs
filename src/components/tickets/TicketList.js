@@ -13,6 +13,8 @@ export const TicketList = () => {
     if (emergency) {
       const emergencyTickets = tickets.filter((ticket) => ticket.emergency);
       setFilteredTickets(emergencyTickets);
+    } else {
+      setFilteredTickets(tickets);
     }
   }, [emergency]);
 
@@ -42,13 +44,24 @@ export const TicketList = () => {
   return (
     <>
       {honeyUserObj.staff ? (
-        <button
-          onClick={() => {
-            setEmergency(true);
-          }}
-        >
-          Emergencies Only
-        </button>
+        <>
+          {/* display an "emergencies only button" to employee users */}
+          <button
+            onClick={() => {
+              setEmergency(true);
+            }}
+          >
+            Emergencies Only
+          </button>
+          {/* display a "show all" button to employee users */}
+          <button
+            onClick={() => {
+              setEmergency(false);
+            }}
+          >
+            Show All
+          </button>
+        </>
       ) : (
         ""
       )}
