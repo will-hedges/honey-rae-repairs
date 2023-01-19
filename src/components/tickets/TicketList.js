@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Tickets.css";
 
 export const TicketList = () => {
   const [tickets, setTickets] = useState([]);
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [emergency, setEmergency] = useState(false);
+  const navigate = useNavigate();
 
   const localHoneyUser = localStorage.getItem("honey_user");
   const honeyUserObj = JSON.parse(localHoneyUser);
@@ -63,13 +65,16 @@ export const TicketList = () => {
           </button>
         </>
       ) : (
-        ""
+        // if the user is a customer, display a button to create a new ticket
+        <button onClick={() => navigate("/ticket/create")}>
+          Create Ticket
+        </button>
       )}
       <h2>List of Tickets</h2>
       <article className="tickets">
         {filteredTickets.map((ticket) => {
           return (
-            <section className="ticket">
+            <section className="ticket" key={ticket.id}>
               <header>{ticket.description}</header>
               <footer>Emergency: {ticket.emergency ? "🚨" : "No"}</footer>
             </section>
