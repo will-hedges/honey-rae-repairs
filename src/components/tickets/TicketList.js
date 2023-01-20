@@ -46,11 +46,17 @@ export const TicketList = () => {
   }, [tickets]);
 
   useEffect(() => {
-    const openTickets = tickets.filter(
-      (ticket) => ticket.userId === honeyUserObj.id && !ticket.dateCompleted
-    );
-
-    setFilteredTickets(openTickets);
+    if (openOnly) {
+      const openTickets = tickets.filter(
+        (ticket) => ticket.userId === honeyUserObj.id && !ticket.dateCompleted
+      );
+      setFilteredTickets(openTickets);
+    } else {
+      const allTickets = tickets.filter(
+        (ticket) => ticket.userId === honeyUserObj.id
+      );
+      setFilteredTickets(allTickets);
+    }
   }, [openOnly]);
 
   return (
@@ -81,6 +87,7 @@ export const TicketList = () => {
             Create Ticket
           </button>
           <button onClick={() => updateOpenOnly(true)}>Open Tickets</button>
+          <button onClick={() => updateOpenOnly(false)}>All Tickets</button>
         </>
       )}
       <h2>List of Tickets</h2>
