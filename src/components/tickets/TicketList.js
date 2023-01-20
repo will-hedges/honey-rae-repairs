@@ -47,8 +47,7 @@ export const TicketList = () => {
 
   useEffect(() => {
     const openTickets = tickets.filter(
-      (ticket) =>
-        ticket.userId === honeyUserObj.id && ticket.dateCompleted !== ""
+      (ticket) => ticket.userId === honeyUserObj.id && !ticket.dateCompleted
     );
 
     setFilteredTickets(openTickets);
