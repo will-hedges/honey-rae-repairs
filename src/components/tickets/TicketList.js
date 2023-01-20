@@ -6,19 +6,11 @@ export const TicketList = () => {
   const [tickets, setTickets] = useState([]);
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [emergency, setEmergency] = useState(false);
+  const [openOnly, updateOpenOnly] = useState(false);
   const navigate = useNavigate();
 
   const localHoneyUser = localStorage.getItem("honey_user");
   const honeyUserObj = JSON.parse(localHoneyUser);
-
-  useEffect(() => {
-    if (emergency) {
-      const emergencyTickets = tickets.filter((ticket) => ticket.emergency);
-      setFilteredTickets(emergencyTickets);
-    } else {
-      setFilteredTickets(tickets);
-    }
-  }, [emergency]);
 
   useEffect(
     () => {
@@ -31,6 +23,16 @@ export const TicketList = () => {
     [] // When this array is empty, you are observing initial component state
   );
 
+  // filter emergency tickets effect
+  useEffect(() => {
+    if (emergency) {
+      const emergencyTickets = tickets.filter((ticket) => ticket.emergency);
+      setFilteredTickets(emergencyTickets);
+    } else {
+      setFilteredTickets(tickets);
+    }
+  }, [emergency]);
+
   useEffect(() => {
     if (honeyUserObj.staff) {
       // employees should see all tickets
@@ -42,6 +44,15 @@ export const TicketList = () => {
       setFilteredTickets(customerTickets);
     }
   }, [tickets]);
+
+  useEffect(() => {
+    const openTickets = tickets.filter(
+      (ticket) =>
+        ticket.userId === honeyUserObj.id && ticket.dateCompleted !== ""
+    );
+
+    setFilteredTickets(openTickets);
+  }, [openOnly]);
 
   return (
     <>
@@ -66,9 +77,12 @@ export const TicketList = () => {
         </>
       ) : (
         // if the user is a customer, display a button to create a new ticket
-        <button onClick={() => navigate("/ticket/create")}>
-          Create Ticket
-        </button>
+        <>
+          <button onClick={() => navigate("/ticket/create")}>
+            Create Ticket
+          </button>
+          <button onClick={() => updateOpenOnly(true)}>Open Tickets</button>
+        </>
       )}
       <h2>List of Tickets</h2>
       <article className="tickets">
