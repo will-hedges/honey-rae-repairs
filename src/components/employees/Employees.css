@@ -1,0 +1,16 @@
+.employees {
+    display: flex;
+    flex-direction: column;
+}
+
+.employee {
+    background-color: aliceblue;
+    border: 1px dotted darkblue;
+    padding: 0.7rem;
+    margin: 0.5rem 0;
+    width: 20%;
+}
+
+.employee__name {
+    font-size: larger;
+}
