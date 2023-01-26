@@ -1,9 +1,9 @@
-.employees {
+.customers {
     display: flex;
     flex-direction: column;
 }
 
-.employee {
+.customer {
     background-color: aliceblue;
     border: 1px dotted darkblue;
     padding: 0.7rem;
@@ -11,6 +11,6 @@
     width: 250px;
 }
 
-.employee__name {
+.customer__name {
     font-size: larger;
 }

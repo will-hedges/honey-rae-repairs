@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import "./Employees.css";
 
+const API = "http://localhost:8088";
+
 export const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8088/users?isStaff=true&_sort=fullName&_order=asc")
+    fetch(`${API}/users?isStaff=true&_sort=fullName&_order=asc`)
       .then((res) => res.json())
       .then((employeeArray) => setEmployees(employeeArray));
   }, []);
